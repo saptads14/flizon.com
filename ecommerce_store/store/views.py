@@ -57,7 +57,7 @@ def add_to_cart(request, product_id):
         product = get_object_or_404(Product, id=product_id)
     except Product.DoesNotExist:
         messages.error(request, 'Product not found.')
-        return redirect('home')
+        return redirect('index')
 
     cart = request.session.get('cart', [])
     
@@ -107,7 +107,7 @@ def remove_from_cart(request, product_id):
 
 
 def home(request):
-    return render(request, 'store/home.html')
+    return render(request, 'store/index.html')
 
 def electronics(request):
     return render(request, 'store/electronics.html')
