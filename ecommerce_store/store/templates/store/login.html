@@ -1,0 +1,107 @@
+{% extends 'store/home.html' %}
+{% load static %}
+
+{% block title %}Login{% endblock title %}
+
+{% block main-content %}
+
+<style>
+    .container {
+        margin-top: 50px;
+    }
+    .login-heading {
+        font-family:Georgia, 'Times New Roman', Times, serif;
+        color: #1d1b4f;
+    }
+    .login-image {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        margin-bottom: 10px;
+    }
+    .form-container {
+        background: linear-gradient(to left, #a6bbff, #d7f2ff, #a6bbff);
+        border-radius: 10px;
+        padding: 40px;
+        box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.63);
+    }
+    .form-group {
+        margin-bottom: 15px;
+    }
+    .form-group label {
+        font-weight: bold;
+    }
+    .form-group input {
+        border-radius: 5px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        width: 100%;
+    }
+    .btn-submit {
+        background-color: #007bff;
+        border-color: #007bff;
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 5px;
+        width: 40%;
+        margin-top: 20px;
+    }
+    .btn-submit:hover {
+        background-color: #0056b3;
+        border-color: #004085;
+    }
+    .forgot-password, .create-account {
+        display: block;
+        margin-top: 10px;
+        font-weight: bold;
+        font-size: 12px;
+    }
+    .create-account {
+        margin-top: 20px;
+        font-weight: bold;
+        font-size: 12px;
+    }
+    .text-danger {
+        color: #f01a2f !important;
+        font-weight: bold;
+        font-size: 12px;
+    }
+</style>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6 offset-sm-3">
+            <h3 class="login-heading text-center"><u>Login</u></h3>
+            <hr>
+            <div class="text-center">
+                <img src="{% static 'icons/icon2.gif' %}" alt="Login Animation" class="login-image">
+            </div>
+
+            <div class="form-container">
+                <form action="" method="post" novalidate>
+                    {% csrf_token %}
+                    {% for field in form %}
+                    <div class="form-group">
+                        {{ field.label_tag }} {{ field }} <small class="text-danger">{{ field.errors|striptags }}</small>
+                    </div>
+                    {% endfor %}
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary btn-submit">Submit</button>
+                    </div>
+                    <small><a href="{% url 'password_reset' %}" class="forgot-password">Forgot Password?</a></small>
+                    <div class="text-center text-primary fw-bold create-account">
+                        <small>New User? <a href="{% url 'customerregistration' %}" class="text-danger">Create an account</a></small>
+                    </div>
+
+                    {% if form.non_field_errors %}  
+                    {% for error in form.non_field_errors %}
+                    <p class="alert alert-danger my-3">{{ error }}</p>
+                    {% endfor %}
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock main-content %}

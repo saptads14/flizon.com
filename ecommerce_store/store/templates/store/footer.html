@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+  {% load static %}
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <style>
+     footer {
+        background-color: #012546;
+        color: #f8f9fa;
+        padding-top: 1.5rem; /* Reduced padding to make footer height smaller */
+        margin-top: 100px;
+        width: 100%; /* Set the width to 100% */
+        position: relative; /* Ensure it spans the full screen width */
+        left: 0; /* Align it to the left edge */
+        right: 0; /* Align it to the right edge */
+    }
+    footer h6 {
+        font-weight: bold;
+        margin-bottom: 1rem;
+        color: #ffffff;
+    }
+    footer ul {
+        padding: 0;
+        list-style: none;
+        line-height: 2;
+    }
+    footer ul li a {
+        color: #8d8a8a;
+        text-decoration: none;
+    }
+    footer ul li a:hover {
+        color: #ffffff;
+        text-decoration: underline;
+    }
+    .social-icons img {
+        width: 20px; /* Reduced size of social icons */
+        height: 20px; /* Reduced size of social icons */
+        margin-right: 5px; /* Adjusted margin to fit smaller icons */
+    }
+    footer .text-md-end img {
+        width: 35px; /* Reduced size of other icons */
+        height: 25px; /* Added height property for consistency */
+        border-radius: 12%;
+        margin: 0 4px; /* Adjusted margin to fit smaller icons */
+    }
+    footer .text-md-end img:last-child {
+        margin-right: 5px; /* Adjusted margin to fit smaller icons */
+    }
+    p {
+        text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2">
+                <h6>ABOUT</h6>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="text-light">Contact Us</a></li>
+                    <li><a href="#" class="text-light">About Us</a></li>
+                    <li><a href="#" class="text-light">Careers</a></li>
+                    <li><a href="#" class="text-light">Corporate Information</a></li>
+                </ul>
+            </div>
+            <div class="col-md-2 vertical-line">
+                <h6>HELP</h6>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="text-light">Payments</a></li>
+                    <li><a href="#" class="text-light">Shipping</a></li>
+                    <li><a href="#" class="text-light">Cancellation & Returns</a></li>
+                    <li><a href="#" class="text-light">FAQ</a></li>
+                </ul>
+            </div>
+            <div class="col-md-2 vertical-line">
+                <h6>POLICY</h6>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="text-light">Return Policy</a></li>
+                    <li><a href="#" class="text-light">Terms Of Use</a></li>
+                    <li><a href="#" class="text-light">Security</a></li>
+                    <li><a href="#" class="text-light">Privacy</a></li>
+                </ul>
+            </div>
+            <div class="col-md-2 vertical-line">
+                <h6>SOCIAL</h6>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="text-light">Facebook</a></li>
+                    <li><a href="#" class="text-light">Twitter</a></li>
+                    <li><a href="#" class="text-light">YouTube</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4 text-md-end vertical-line">
+                <h6>Registered Office Address:</h6>
+                    <address>
+                        Flizon Internet Private Limited,<br>
+                        Kolkata, 700008,<br>
+                        West Bengal, India<br>
+                        CIN: U51109KA2012PTC066107<br>
+                        Telephone: 044-45614700 / 044-67415800
+                    </address>
+            </div>
+        </div>
+        <div class="horizontal-line"></div>
+        <div class="row mt-4">
+            <div class="col-md-4">
+                <h6>Follow Us</h6>
+                <div class="social-icons">
+                    <a href="https://facebook.com"><img src="{% static 'icons/facebook.png' %}" alt="Facebook"></a>
+                    <a href="https://instagram.com"><img src="{% static 'icons/instagram.png' %}" alt="Instagram"></a>
+                    <a href="https://youtube.com"><img src="{% static 'icons/youtube.png' %}" alt="YouTube"></a>
+                </div>
+            </div>
+            <div class="col-md-8 text-md-end">
+                <img src="{% static 'icons/visa.png' %}" alt="Visa" class="me-2">
+                <img src="{% static 'icons/mastercard.png' %}" alt="Mastercard" class="me-2">
+                <img src="{% static 'icons/american_express.png' %}" alt="American Express" class="me-2">
+                <img src="{% static 'icons/net_banking.png' %}" alt="Netbanking" class="me-2">
+                <img src="{% static 'icons/rupay.png' %}" alt="Rupay" class="me-2">
+                <img src="{% static 'icons/paypal.png' %}" alt="PayPal" class="me-2">
+                <img src="{% static 'icons/cash_on_delivery.png' %}" alt="Cash on Delivery" class="me-2">
+                <img src="{% static 'icons/easy_emi_options.png' %}" alt="Easy EMI Options" class="me-2">
+            </div>
+        </div>
+        <div class="horizontal-line"></div>
+        <div class="text-center mt-4">
+            <p class="mb-0">&copy; 2024 Flizon Internet Private Limited. All rights reserved.</p>
+        </div>
+    </div>
+  </footer>
+</body>
+</html>

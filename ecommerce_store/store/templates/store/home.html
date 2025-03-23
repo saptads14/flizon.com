@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="title" content="Project">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="language" content="English">
+    <meta name="author" content="Vinayak Sharma">
+    <title>{% block title %}Online Shopping Site FLIZON{% endblock %}</title>
+    <link rel="icon" type="image/png" href="{% static 'images/logo.png' %}">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+
+    <!-- Message Alerts -->
+    {% if messages %}
+        {% for message in messages %}
+            <script>
+                alert("{{ message }}");
+            </script>
+        {% endfor %}
+    {% endif %}
+    <style>
+        .carousel {
+            width: 100vw; /* Full viewport width */
+            margin-left: calc(-50vw + 50%); /* Centering adjustment */
+        }
+
+        .carousel-inner {
+            max-width: 80%; /* Adjust the width as needed */
+            margin: auto;
+        }
+
+        .carousel-item {
+            height: 300px; /* Smaller height */
+        }
+
+        .carousel-item img {
+            object-fit: cover;
+            height: 100%; /* Ensure image fills the container */
+            width: 100%;
+        }
+
+        .carousel-control-prev-icon,
+        .carousel-control-next-icon {
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            padding: 10px;
+        }
+
+        /* Style the carousel indicators */
+        .carousel-indicators li {
+            background-color: rgb(188, 188, 188);
+        }
+
+        .carousel-indicators .active {
+            background-color: #00ffd9;
+        }
+
+        .container.mt-4 {
+            padding: 0; /* Remove padding if necessary */
+        }
+
+        .container.mt-4 h1 {
+            font-family: Georgia, 'Times New Roman', Times, serif; /* Modern font */
+            font-size: 3rem; /* Larger font size */
+            font-weight: 700; /* Bold font weight */
+            color: #000b6a; /* Dark grey color for text */
+            text-shadow: 0px 1px 8px rgba(11, 96, 167, 0.557); /* Subtle shadow for depth */
+            margin-bottom: 20px; /* Space below the heading */
+            position: relative; /* Position for pseudo-element */
+        }
+
+        .container.mt-4 h1::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            height: 6px;
+            width: 100%; 
+            background: linear-gradient(to right, #6c3fe0, #b1d8ff); /* Gradient underline */
+            border-radius: 8px; /* Rounded corners for the underline */
+        }
+
+        .container.mt-4 h1 span {
+            color: #6c3fe0; /* Accent color */
+        }
+
+        .carousel-item-next, .carousel-item-prev, .carousel-item-active {
+            transition: transform 1.0s ease-in-out; /* 1.0 seconds for the sliding animation */
+        }
+
+        /* Additional styling for responsiveness */
+        @media (max-width: 768px) {
+            .carousel-item {
+                height: 200px; /* Adjust height for smaller screens */
+            }
+            .carousel-control-prev,
+            .carousel-control-next {
+                width: 40px;
+                height: 40px;
+                line-height: 40px;
+                font-size: 20px;
+            }
+        }
+
+        .section-heading {
+    font-family: 'Georgia', 'Times New Roman', Times, serif; /* Stylish serif font */
+    font-size: 22px; /* Font size */
+    font-style: italic; /* Italic style */
+    font-weight: bold; /* Bold weight */
+    color: #293a7d; /* Text color */
+    text-align: left; /* Align to the left */
+    margin-top: 30px; /* Top margin */
+    margin-bottom: 20px; /* Bottom margin */
+    position: relative; /* Relative positioning to place icon */
+}
+
+.trending-icon {
+    display: inline-block; /* Ensure the icon is aligned properly with text */
+    margin-left: 15px; /* Space between heading text and icon */
+    vertical-align: middle; /* Align icon vertically with text */
+}
+
+.trending-icon img {
+    width: 35px;
+    height: auto;
+}
+
+        .card-group {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            width: 18rem;
+            margin: 10px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card img {
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        width: 100%;
+        height: 200px; /* Set a uniform height for all images */
+        object-fit: cover; /* Ensure images are uniformly sized */
+        transition: transform 0.3s; /* Add transition for zoom effect */
+    }
+
+    .card:hover img {
+        transform: scale(1.1); 
+    }
+
+        .card-body {
+            text-align: center;
+        }
+    </style>
+</head>
+<body class="container-fluid">
+    <header class="row">
+        {% include "store/navbar.html" %}   
+    </header>
+    <main>
+        {% block main-content %}
+        <div class="container mt-4">
+            <h1 class="text-center">Welcome to FLIZON</h1>
+            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <a href="{% url 'fashion' %}">
+                        <img src="{% static 'icons/1.jpg' %}" class="d-block w-100" alt="Electronics">
+                        </a>
+                    </div>
+                    <div class="carousel-item">
+                        <a href="{% url 'sarees' %}">
+                        <img src="{% static 'icons/2.jpg' %}" class="d-block w-100" alt="Fashion">
+                        </a>
+                    </div>
+                    <div class="carousel-item">
+                        <a href="{% url 'laptop' %}">
+                        <img src="{% static 'icons/3.jpg' %}" class="d-block w-100" alt="Furniture">
+                        </a>
+                    </div>
+                    <div class="carousel-item">
+                        <a href="{% url 'men_shoes' %}">
+                        <img src="{% static 'icons/4.jpg' %}" class="d-block w-100" alt="Furniture">
+                        </a>
+                    </div>
+                </div>
+                <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-bs-slide="prev">
+                    <span class="fa fa-chevron-left" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-bs-slide="next">
+                    <span class="fa fa-chevron-right" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+                <!-- Carousel Indicators -->
+                <ol class="carousel-indicators">
+                    <li data-bs-target="#carouselExampleControls" data-bs-slide-to="0" class="active"></li>
+                    <li data-bs-target="#carouselExampleControls" data-bs-slide-to="1"></li>
+                    <li data-bs-target="#carouselExampleControls" data-bs-slide-to="2"></li>
+                    <li data-bs-target="#carouselExampleControls" data-bs-slide-to="3"></li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="container mt-4">
+            <h2 class="section-heading">Best of Fashion</h2>
+            <div class="card-group">
+                <div class="card">
+                    <img src="{% static 'fashion/1.png' %}" class="card-img-top" alt="Fashion 1">
+                    <div class="card-body">
+                        <a href="{% url 'fashion' %}">
+                        <h5 class="card-title">Unstitched Cotton Linen Multi-purpose Fabric Solid, Self Design</h5>
+                        <h6 class="card-title">₹ 799</h6>
+                        <a href="{% url 'add_to_cart' 26 %}" class="btn btn-primary">Add to Cart</a>
+                        </a>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="{% static 'fashion/3.png' %}" class="card-img-top" alt="Fashion 2">
+                    <div class="card-body">
+                        <a href="{% url 'fashion' %}">
+                        <h5 class="card-title">Men Solid Polo Neck Polyester Orange T-Shirt</h5>
+                        <h6 class="card-title">₹ 289</h6>
+                        <a href="{% url 'add_to_cart' 27 %}" class="btn btn-primary">Add to Cart</a>
+                        </a>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="{% static 'fashion/2.png' %}" class="card-img-top" alt="Fashion 3">
+                    <div class="card-body">
+                        <a href="{% url 'fashion' %}">
+                        <h5 class="card-title">Self Design Bollywood Net Saree (Purple)</h5>
+                        <h6 class="card-title">₹ 459</h6>
+                        <a href="{% url 'add_to_cart' 28 %}" class="btn btn-primary">Add to Cart</a>
+                        </a>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="{% static 'fashion/4.png' %}" class="card-img-top" alt="Fashion 4">
+                    <div class="card-body">
+                        <a href="{% url 'fashion' %}">
+                        <h5 class="card-title">Men Colorblock Polo Neck Poly Cotton Red T-Shirt</h5>
+                        <h6 class="card-title">₹ 320</h6>
+                        <a href="{% url 'add_to_cart' 299 %}" class="btn btn-primary">Add to Cart</a>
+                        </a>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="{% static 'fashion/5.png' %}" class="card-img-top" alt="Fashion 5">
+                    <div class="card-body">
+                        <a href="{% url 'fashion' %}">
+                        <h5 class="card-title">Printed Leheria Chiffon Saree (Multicolor)</h5>
+                        <h6 class="card-title">₹ 550</h6>
+                        <a href="{% url 'add_to_cart' 30 %}" class="btn btn-primary">Add to Cart</a>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container mt-4">
+            <h2 class="section-heading">
+                Best of Trending Electronics
+                <span class="trending-icon">
+                    <img src="{% static 'icons/icon.png' %}" alt="Trending Icon">
+                </span>
+            </h2>
+            <div class="card-group">
+                <div class="card">
+                    <img src="{% static 'electronics/1.png' %}" class="card-img-top" alt="Electronics 1">
+                    <div class="card-body">
+                        <a href="{% url 'electronics' %}">
+                        <h5 class="card-title">Realme 13 Pro 5G (Monet Purple, 128 GB)</h5>
+                        <h6 class="card-title">₹ 26,990</h6>
+                        </a>
+                        <a href="{% url 'add_to_cart' 31 %}" class="btn btn-primary">Add to Cart</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="{% static 'electronics/2.png' %}" class="card-img-top" alt="Electronics 2">
+                    <div class="card-body">
+                        <a href="{% url 'electronics' %}">
+                        <h5 class="card-title">SAMSUNG Galaxy F15 5G (Jazzy Green, 128 GB) (4 GB RAM)</h5>
+                        <h6 class="card-title">₹ 12,990</h6>
+                        </a>
+                        <a href="{% url 'add_to_cart' 32 %}" class="btn btn-primary">Add to Cart</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="{% static 'electronics/3.png' %}" class="card-img-top" alt="Electronics 3">
+                    <div class="card-body">
+                        <a href="{% url 'electronics' %}">
+                        <h5 class="card-title">HP Omen Intel Core i7 13th Gen 13620H</h5>
+                        <h6 class="card-title">₹ 1,14,990</h6>
+                        </a>
+                        <a href="{% url 'add_to_cart' 33 %}" class="btn btn-primary">Add to Cart</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="{% static 'electronics/4.png' %}" class="card-img-top" alt="Electronics 4">
+                    <div class="card-body">
+                        <a href="{% url 'electronics' %}">
+                        <h5 class="card-title">ASUS Vivobook 15 Intel Core i5 12th Gen 12500H</h5>
+                        <h6 class="card-title">₹ 52,999</h6>
+                        </a>
+                        <a href="{% url 'add_to_cart' 34 %}" class="btn btn-primary">Add to Cart</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="{% static 'electronics/5.png' %}" class="card-img-top" alt="Electronics 5">
+                    <div class="card-body">
+                        <a href="{% url 'electronics' %}">
+                        <h5 class="card-title">ASUS ROG Strix G16 Intel Core i7 13th Gen 13650HX</h5>
+                        <h6 class="card-title">₹ 1,25,990</h6>
+                        </a>
+                        <a href="{% url 'add_to_cart' 35 %}" class="btn btn-primary">Add to Cart</a>
+                    </div>
+                </div>
+            </div>
+        </div>            
+
+        <div class="container mt-4">
+            <h2 class="section-heading">Suggested for You</h2>
+            <div class="card-group">
+                <div class="card">
+                    <img src="{% static 'suggested/1.png' %}" class="card-img-top" alt="Suggested 1">
+                    <div class="card-body">
+                        <a href="{% url 'furniture' %}">
+                        <h5 class="card-title">Flipkart Perfect Homes Opus Engineered Wood King Box Bed</h5>
+                        <h6 class="card-title">₹ 13,499</h6>
+                        </a>
+                        <a href="{% url 'add_to_cart' 36 %}" class="btn btn-primary">Add to Cart</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="{% static 'suggested/2.png' %}" class="card-img-top" alt="Suggested 2">
+                    <div class="card-body">
+                        <a href="{% url 'furniture' %}">
+                        <h5 class="card-title">Home by nilkamal Marbito Engineered Wood King Box Bed</h5>
+                        <h6 class="card-title">₹ 22,499</h6>
+                        </a>
+                        <a href="{% url 'add_to_cart' 37 %}" class="btn btn-primary">Add to Cart</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="{% static 'suggested/4.png' %}" class="card-img-top" alt="Suggested 3">
+                    <div class="card-body">
+                        <a href="{% url 'fashion' %}">
+                        <h5 class="card-title">lestest Formal shoes/Comfortable shoes, official shoes for men</h5>
+                        <h6 class="card-title">₹ 549</h6>
+                        </a>
+                        <a href="{% url 'add_to_cart' 38 %}" class="btn btn-primary">Add to Cart</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="{% static 'suggested/3.png' %}" class="card-img-top" alt="Suggested 4">
+                    <div class="card-body">
+                        <a href="{% url 'fashion' %}">
+                        <h5 class="card-title">Stylish Partywear Look Formal Shoes Lace Up For Men</h5>
+                        <h6 class="card-title">₹ 599</h6>
+                        <a href="{% url 'fashion' %}"></a>
+                        <a href="{% url 'add_to_cart' 39 %}" class="btn btn-primary">Add to Cart</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="{% static 'suggested/5.png' %}" class="card-img-top" alt="Suggested 5">
+                    <div class="card-body">
+                        <a href="{% url 'fashion' %}">
+                        <h5 class="card-title">Women Casual Sandal Black</h5>
+                        <h6 class="card-title">₹ 389</h6>
+                        </a>
+                        <a href="{% url 'add_to_cart' 40 %}" class="btn btn-primary">Add to Cart</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endblock %}
+    </main>
+    {% include "store/footer.html" %}
+</body>
+</html>

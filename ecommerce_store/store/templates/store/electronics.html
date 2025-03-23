@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electronics | FLIZON</title>
+    {% load static %}
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'home.css' %}">
+
+    <style>
+        .navbar {
+            background: linear-gradient(to right, #511fcf, #b3d9ff, #511fcf);
+        }
+        .navbar .navbar-brand {
+            color: #f8f9fa;
+            font-weight: bold;
+            font-size: 24px;
+        }
+        .navbar .navbar-brand img {
+            height: 60px;
+            margin-right: 10px;
+        }
+        .navbar .navbar-nav .nav-link {
+            color: #ffffff; 
+        }
+        .navbar .navbar-toggler {
+            border-color: #f8f9fa; 
+        }
+        .navbar .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(8, 8, 8, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+        }
+        .navbar .dropdown-menu {
+            background-color: #27527e;
+            border: none;
+        }
+        .navbar .dropdown-menu .dropdown-item {
+            color: #f8f9fa; 
+        }
+        .navbar .dropdown-menu .dropdown-item:hover {
+            background-color: #87b9ea; 
+        }
+        .navbar .form-control {
+            width: 600px; 
+            margin-right: 10px; 
+        }
+        .navbar .btn-outline-success {
+            color: #f8f9fa; 
+            border-color: #f8f9fa;
+            background-color: #7b00ff; 
+            width: 100px; 
+        }
+        .navbar .btn-outline-success:hover {
+            color: #ffffff; 
+            background-color: #6fb7ff; 
+            border-color: #f8f9fa;
+        }
+        .navbar .navbar-nav .nav-item .nav-link i {
+            margin-right: 5px; 
+        }
+        .navbar .btn-link {
+            color: #f8f9fa; 
+        }
+        .navbar .btn-link:hover {
+            color: #f8f9fa; 
+            text-decoration: underline;
+        }
+
+        /* Heading and Subheading Styling */
+        .main-heading {
+            font-family: 'Arial', sans-serif;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #333;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .subheading {
+            font-family: 'Georgia', serif;
+            font-size: 1.25rem;
+            font-style: italic;
+            color: #666;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        /* Card Image and Card Styling */
+        .card-img-top {
+            width: 100%;
+            height: 350px; /* Fixed height for uniformity */
+            object-fit: cover; /* Ensures images cover the space without distortion */
+        }
+
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Default shadow */
+            border: none; /* Removes default border */
+            border-radius: 8px; /* Rounded corners */
+            padding: 1rem; /* Adds padding inside the card */
+            margin-bottom: 20px; /* Adds space below each card */
+        }
+
+        .card:hover {
+            transform: translateY(-10px); /* Slight lift effect on hover */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover */
+        }
+
+        .card-body {
+            padding: 1.25rem; /* Adds padding inside the card body */
+        }
+
+        .btn-primary {
+            margin-right: 10px; /* Adds space between buttons */
+        }
+    </style>
+
+    <!-- Message Alerts -->
+    {% if messages %}
+        {% for message in messages %}
+            <script>
+                alert("{{ message }}");
+            </script>
+        {% endfor %}
+    {% endif %}
+</head>
+<body class="container-fluid">
+    <header class="row">
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="{% url 'home' %}">
+                    <img src="{% static 'images/logo.png' %}" alt="Company Logo">
+                    FLIZON
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="{% url 'home' %}">Home</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Categories
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="{% url 'furniture' %}">Furniture</a></li>
+                                <li><a class="dropdown-item" href="{% url 'electronics' %}">Electronics</a></li>
+                                <li><a class="dropdown-item" href="{% url 'fashion' %}">Fashion</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <form class="d-flex" method="get">
+                        <input class="form-control me-2" type="search" name="query" placeholder="Search for Products, Brands & More" aria-label="Search">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item mx-2">
+                            <a href="{% url 'cart' %}" class="nav-link"><i class="fa fa-shopping-basket"></i> Cart</a>
+                        </li>
+                        <li class="nav-item mx-2">
+                            {% if user.is_authenticated %}
+                            <form method="post" action="{% url 'logout' %}" class="d-inline">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-link nav-link">Logout</button>
+                            </form>
+                        </li>
+                        <li class="nav-item mx-2">
+                            {% else %}
+                            <a href="{% url 'login' %}" class="nav-link">Login</a>
+                        </li>
+                        <li class="nav-item mx-2">
+                            <a href="{% url 'customerregistration' %}" class="nav-link">Register</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container mt-4">
+        <h1 class="main-heading">Electronics</h1>
+        <p class="subheading">Discover our latest electronic gadgets and appliances.</p>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <img src="{% static 'images/mobile.jpg' %}" class="card-img-top" alt="Mobile">
+                    <div class="card-body text-center">
+                        <a href="{% url 'mobile' %}" class="btn btn-primary">Explore Mobiles</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <img src="{% static 'images/laptop.jpg' %}" class="card-img-top" alt="Laptop">
+                    <div class="card-body text-center">
+                        <a href="{% url 'laptop' %}" class="btn btn-primary">Explore Laptops</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include "store/footer.html" %}
+</body>
+</html>

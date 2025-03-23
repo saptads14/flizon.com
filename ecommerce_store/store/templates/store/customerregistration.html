@@ -1,0 +1,92 @@
+{% extends 'store/home.html' %}
+{% load static %}
+
+{% block title %}Customer Registration{% endblock title %}
+
+{% block main-content %}
+
+<style>
+    .container {
+        margin-top: 50px;
+    }
+    .registration-heading {
+        font-family:Georgia, 'Times New Roman', Times, serif;
+        color: #1d1b4f;
+    }
+    .form-container {
+        background: linear-gradient(to left, #a6bbff, #d7f2ff, #a6bbff);
+        border-radius: 10px;
+        padding: 40px;
+        box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.6);
+    }
+    .form-group {
+        margin-bottom: 15px;
+    }
+    .form-group label {
+        font-weight: bold;
+    }
+    .form-group input {
+        border-radius: 5px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        width: 100%;
+    }
+    .btn-submit {
+        background-color: #007bff;
+        border-color: #007bff;
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 5px;
+        width: 20%;
+        margin-top: 20px;
+    }
+    .btn-submit:hover {
+        background-color: #0056b3;
+        border-color: #004085;
+    }
+    .existing-user {
+        display: block;
+        color: #006ada;
+        font-size: 18px;
+        font-weight: bold;
+        margin-top: 20px;
+    }
+    .text-danger {
+        color: #f01a2f !important;
+        font-weight: bold;
+        font-size: 12px;
+    }
+</style>
+
+<div class="container">
+    <div class="row my-3">
+        <div class="col-sm-6 offset-sm-3">
+            <h3 class="registration-heading text-center"><u>Customer Registration</u></h3>
+            <hr>
+
+            <div class="form-container">
+                <form action="" method="post" novalidate>
+                    {% csrf_token %}
+                    {% for field in form %}
+                    <div class="form-group mb-3">
+                        {{ field.label_tag }} {{ field }} <small class="text-danger">{{ field.errors|striptags }}</small>
+                    </div>
+                    {% endfor %}
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary btn-submit">Submit</button>
+                    </div>
+                    <div class="text-center text-primary fw-bold existing-user">
+                        <small>Existing User? <a href="{% url 'login' %}" class="text-danger">Login Now</a></small>
+                    </div>
+
+                    {% if form.non_field_errors %}
+                    {% for error in form.non_field_errors %}
+                    <p class="alert alert-danger my-3">{{ error }}</p>
+                    {% endfor %}
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock main-content %}

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Navbar styles */
+        .navbar {
+            background: linear-gradient(to right, #511fcf, #b3d9ff, #511fcf);
+        }
+        .navbar .navbar-brand {
+            color: #f8f9fa; 
+            font-weight: bold;
+            font-size: 24px;
+        }
+        .navbar .navbar-brand img {
+            height: 60px; 
+            position: relative;
+            margin-right: 10px;
+        }
+
+        .navbar .navbar-nav .nav-link {
+            color: #ffffff; 
+        }
+        .navbar .navbar-toggler {
+            border-color: #f8f9fa; /* White border for toggler */
+        }
+        .navbar .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(8, 8, 8, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+        }
+        .navbar .dropdown-menu {
+            background-color: #27527e; /* Dark background for dropdown menu */
+            border: none;
+        }
+        .navbar .dropdown-menu .dropdown-item {
+            color: #f8f9fa; /* White text for dropdown items */
+        }
+        .navbar .dropdown-menu .dropdown-item:hover {
+            background-color: #87b9ea; /* Slightly darker background on hover */
+        }
+        .navbar .form-control {
+            width: 600px; /* Wider search box */
+            margin-right: 10px; /* Spacing between search box and button */
+        }
+        .navbar .btn-outline-success {
+            color: #f8f9fa; /* White text for button */
+            border-color: #f8f9fa;
+            background-color: #7b00ff; /* Background color for button */
+            width: 100px; /* Width of the button */
+        }
+        .navbar .btn-outline-success:hover {
+            color: #ffffff; /* Dark text on hover */
+            background-color: #6fb7ff; /* Background color on hover */
+            border-color: #f8f9fa;
+        }
+        .navbar .navbar-nav .nav-item .nav-link i {
+            margin-right: 5px; /* Spacing between icon and text */
+        }
+        .navbar .btn-link {
+            color: #f8f9fa; /* White text for logout button */
+        }
+        .navbar .btn-link:hover {
+            color: #f8f9fa; /* White text on hover */
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'home' %}">
+                <img src="{% static 'images/logo.png' %}" alt="Company Logo">
+                FLIZON
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="{% url 'home' %}">Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Categories
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="{% url 'furniture' %}">Furniture</a></li>
+                            <li><a class="dropdown-item" href="{% url 'electronics' %}">Electronics</a></li>
+                            <li><a class="dropdown-item" href="{% url 'fashion' %}">Fashion</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <form class="d-flex" method="get">
+                    <input class="form-control me-2" type="search" name="query" placeholder="Search for Products, Brands & More" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item mx-2">
+                        <a href="{% url 'cart' %}" class="nav-link"><i class="fa fa-shopping-basket"></i> Cart</a>
+                    </li>
+                    <li class="nav-item mx-2">
+                        {% if user.is_authenticated %}
+                        <form method="post" action="{% url 'logout' %}" class="d-inline">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-link nav-link">Logout</button>
+                        </form>
+                    </li>
+                    <li class="nav-item mx-2">
+                        {% else %}
+                        <a href="{% url 'login' %}" class="nav-link">Login</a>
+                    </li>
+                    <li class="nav-item mx-2">
+                        <a href="{% url 'customerregistration' %}" class="nav-link">Register</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

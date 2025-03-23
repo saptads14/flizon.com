@@ -1,0 +1,85 @@
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.container {
+    flex: 1;
+}
+
+.navbar-brand img {
+    height: 40px;
+}
+
+.navbar-nav .nav-link.active {
+    text-decoration: underline;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+    width: 100%;
+    position: relative;
+    bottom: 0;
+}
+
+footer a {
+    color: white;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+.category-carousel {
+    display: flex;
+    overflow: hidden;
+    margin-top: 20px;
+    position: relative;
+}
+
+.category-carousel img {
+    flex: 1 0 100%;
+    height: auto;
+    max-width: 100%;
+    animation: slide 6s infinite;
+}
+
+@keyframes slide {
+    0% { transform: translateX(0); }
+    33% { transform: translateX(0); }
+    50% { transform: translateX(-100%); }
+    83% { transform: translateX(-100%); }
+    100% { transform: translateX(-200%); }
+}
+
+.form-inline input[type="search"] {
+    width: 400px;
+}
+
+@media (max-width: 576px) {
+    .form-inline input[type="search"] {
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .category-carousel img {
+        animation: none;
+    }
+}
+
+.basket-icon {
+    height: 24px;
+    width: 24px;
+    margin-right: 10px;
+}
