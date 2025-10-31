@@ -116,7 +116,6 @@ def remove_from_wishlist(request, product_id):
 
 
 
-
 # cart page
 @login_required
 def cart(request):
@@ -239,7 +238,7 @@ def women_shoes(request):
 def sarees(request):
     return render(request, 'store/sarees.html')
 
-# views.py
+
 from django.shortcuts import render, redirect
 from .models import Address  # make sure you have this model
 from django.contrib.auth.decorators import login_required
