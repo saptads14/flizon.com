@@ -18,44 +18,127 @@
             </script>
         {% endfor %}
     {% endif %}
+    <style>
+        body {
+            overflow-x: hidden; /* Prevent horizontal overflow */
+        }
+        .table-responsive {
+            overflow-x: auto;
+        }
+        footer {
+            background-color: #012546;
+            color: #f8f9fa;
+            padding: 1.5rem 0;
+            width: 100%;
+            margin-top: auto;
+            left: 0;
+            right: 0;
+        }
+        footer h6 {
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: #ffffff;
+        }
+        footer ul {
+            padding: 0;
+            list-style: none;
+            line-height: 2;
+        }
+        footer ul li a {
+            color: #8d8a8a;
+            text-decoration: none;
+        }
+        footer ul li a:hover {
+            color: #ffffff;
+            text-decoration: underline;
+        }
+        .social-icons img {
+            width: 20px;
+            height: 20px;
+            margin-right: 5px;
+        }
+        footer .text-md-end img {
+            width: 35px;
+            height: 25px;
+            border-radius: 12%;
+            margin: 0 4px;
+        }
+        footer .text-md-end img:last-child {
+            margin-right: 5px;
+        }
+
+        /* Cart buttons container */
+        .cart-buttons {
+            display: flex;
+            justify-content: space-between; /* Buy Now left, Back to shopping right */
+            margin-bottom: 2.5rem; /* spacing from footer */
+            gap: 15px;
+        }
+
+        a.btn-gradient {
+            background: linear-gradient(to right, #511fcf, #5fa3ff); /* Purple to blue gradient */
+            color: white !important; /* Force text color white */
+            border: none;
+            padding: 12px 25px;
+            font-size: 1.2em;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        a.btn-gradient:hover {
+            background: linear-gradient(to right, #5fa3ff, #511fcf); /* Reverse gradient on hover */
+            transform: translateY(-2px);
+            color: white !important; /* Ensure text stays white on hover */
+        }
+    </style>
 </head>
-<body class="container-fluid">
+<body class="d-flex flex-column min-vh-100">
+
     <header class="row">
-        {% include "store/navbar.html" %}   
+        {% include "store/navbar.html" %}
     </header>
-    <div class="container mt-4">
+
+    <div class="container mt-4 flex-grow-1">
         <h1>Shopping Cart</h1>
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Product</th>
-                    <th>Quantity</th>
-                    <th>Price</th>
-                    <th>Total</th>
-                    <th>Remove</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for item in cart_items %}
-                <tr>
-                    <td>{{ item.product.name }}</td>
-                    <td>{{ item.quantity }}</td>
-                    <td>{{ item.product.price }}</td>
-                    <td>{{ item.total_price }}</td>
-                    <td>
-                        <a href="{% url 'remove_from_cart' item.product.id %}" class="btn btn-danger btn-sm">Remove</a>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Total</th>
+                        <th>Remove</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in cart_items %}
+                    <tr>
+                        <td>{{ item.product.name }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ item.product.price }}</td>
+                        <td>{{ item.total_price }}</td>
+                        <td>
+                            <a href="{% url 'remove_from_cart' item.product.id %}" class="btn btn-danger btn-sm">Remove</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
         <p class="fw-bold fs-4">Total: {{ total }}</p>
-        <a href="{% url 'checkout' %}" class="btn btn-primary btn-lg">Buy Now</a>
+
+        <div class="cart-buttons">
+            <a href="{% url 'checkout' %}" class="btn btn-lg btn-gradient">Buy Now</a>
+            <a href="{% url 'home' %}" class="btn btn-lg btn-gradient">Back to shopping</a>
+        </div>
+
     </div>
 
     {% include "store/footer.html" %}
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 </body>
 </html>

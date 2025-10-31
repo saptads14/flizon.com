@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 {% load static %}
 <html lang="en">
 <head>
@@ -37,6 +37,13 @@
         {% endfor %}
     {% endif %}
     <style>
+        body {
+            overflow-x: hidden; /* Prevent horizontal overflow */
+            margin: 0;
+            padding: 0;
+        }
+
+     
         .carousel {
             width: 100vw; /* Full viewport width */
             margin-left: calc(-50vw + 50%); /* Centering adjustment */
@@ -121,27 +128,27 @@
         }
 
         .section-heading {
-    font-family: 'Georgia', 'Times New Roman', Times, serif; /* Stylish serif font */
-    font-size: 22px; /* Font size */
-    font-style: italic; /* Italic style */
-    font-weight: bold; /* Bold weight */
-    color: #293a7d; /* Text color */
-    text-align: left; /* Align to the left */
-    margin-top: 30px; /* Top margin */
-    margin-bottom: 20px; /* Bottom margin */
-    position: relative; /* Relative positioning to place icon */
-}
+            font-family: 'Georgia', 'Times New Roman', Times, serif; /* Stylish serif font */
+            font-size: 22px; /* Font size */
+            font-style: italic; /* Italic style */
+            font-weight: bold; /* Bold weight */
+            color: #293a7d; /* Text color */
+            text-align: left; /* Align to the left */
+            margin-top: 30px; /* Top margin */
+            margin-bottom: 20px; /* Bottom margin */
+            position: relative; /* Relative positioning to place icon */
+        }
 
-.trending-icon {
-    display: inline-block; /* Ensure the icon is aligned properly with text */
-    margin-left: 15px; /* Space between heading text and icon */
-    vertical-align: middle; /* Align icon vertically with text */
-}
+        .trending-icon {
+            display: inline-block; /* Ensure the icon is aligned properly with text */
+            margin-left: 15px; /* Space between heading text and icon */
+            vertical-align: middle; /* Align icon vertically with text */
+        }
 
-.trending-icon img {
-    width: 35px;
-    height: auto;
-}
+        .trending-icon img {
+            width: 35px;
+            height: auto;
+        }
 
         .card-group {
             display: flex;
@@ -159,25 +166,64 @@
         }
 
         .card img {
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
-        width: 100%;
-        height: 200px; /* Set a uniform height for all images */
-        object-fit: cover; /* Ensure images are uniformly sized */
-        transition: transform 0.3s; /* Add transition for zoom effect */
-    }
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            width: 100%;
+            height: 200px; /* Set a uniform height for all images */
+            object-fit: cover; /* Ensure images are uniformly sized */
+            transition: transform 0.3s; /* Add transition for zoom effect */
+        }
 
-    .card:hover img {
-        transform: scale(1.1); 
-    }
+        .card:hover img {
+            transform: scale(1.1); 
+        }
 
         .card-body {
             text-align: center;
         }
+
+        /* wishlist button styling */
+        .wishlist-form {
+            display: inline-block;
+            margin-left: 6px;
+        }
+        .wishlist-btn {
+            border-radius: 6px;
+            padding: 6px 10px;
+            border: 1px solid #dc3545;
+            background: transparent;
+            color: #dc3545;
+        }
+        .wishlist-btn:hover {
+            background: #dc3545;
+            color: #fff;
+        }
+    html, body {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar, header {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.row {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+.container-fluid {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
     </style>
 </head>
 <body class="container-fluid">
-    <header class="row">
+    <header class="row px-0">
         {% include "store/navbar.html" %}   
     </header>
     <main>
@@ -234,7 +280,13 @@
                         <a href="{% url 'fashion' %}">
                         <h5 class="card-title">Unstitched Cotton Linen Multi-purpose Fabric Solid, Self Design</h5>
                         <h6 class="card-title">₹ 799</h6>
-                        <a href="{% url 'add_to_cart' 26 %}" class="btn btn-primary">Add to Cart</a>
+                        <div class="d-flex justify-content-center">
+                            <a href="{% url 'add_to_cart' 26 %}" class="btn btn-primary">Add to Cart</a>
+                            <form action="{% url 'add_to_wishlist' 26 %}" method="post" class="wishlist-form">
+                                {% csrf_token %}
+                                <button type="submit" class="wishlist-btn"><i class="fa fa-heart"></i></button>
+                            </form>
+                        </div>
                         </a>
                     </div>
                 </div>
@@ -244,7 +296,13 @@
                         <a href="{% url 'fashion' %}">
                         <h5 class="card-title">Men Solid Polo Neck Polyester Orange T-Shirt</h5>
                         <h6 class="card-title">₹ 289</h6>
-                        <a href="{% url 'add_to_cart' 27 %}" class="btn btn-primary">Add to Cart</a>
+                        <div class="d-flex justify-content-center">
+                            <a href="{% url 'add_to_cart' 27 %}" class="btn btn-primary">Add to Cart</a>
+                            <form action="{% url 'add_to_wishlist' 27 %}" method="post" class="wishlist-form">
+                                {% csrf_token %}
+                                <button type="submit" class="wishlist-btn"><i class="fa fa-heart"></i></button>
+                            </form>
+                        </div>
                         </a>
                     </div>
                 </div>
@@ -254,7 +312,13 @@
                         <a href="{% url 'fashion' %}">
                         <h5 class="card-title">Self Design Bollywood Net Saree (Purple)</h5>
                         <h6 class="card-title">₹ 459</h6>
-                        <a href="{% url 'add_to_cart' 28 %}" class="btn btn-primary">Add to Cart</a>
+                        <div class="d-flex justify-content-center">
+                            <a href="{% url 'add_to_cart' 28 %}" class="btn btn-primary">Add to Cart</a>
+                            <form action="{% url 'add_to_wishlist' 28 %}" method="post" class="wishlist-form">
+                                {% csrf_token %}
+                                <button type="submit" class="wishlist-btn"><i class="fa fa-heart"></i></button>
+                            </form>
+                        </div>
                         </a>
                     </div>
                 </div>
@@ -264,7 +328,13 @@
                         <a href="{% url 'fashion' %}">
                         <h5 class="card-title">Men Colorblock Polo Neck Poly Cotton Red T-Shirt</h5>
                         <h6 class="card-title">₹ 320</h6>
-                        <a href="{% url 'add_to_cart' 299 %}" class="btn btn-primary">Add to Cart</a>
+                        <div class="d-flex justify-content-center">
+                            <a href="{% url 'add_to_cart' 29 %}" class="btn btn-primary">Add to Cart</a>
+                            <form action="{% url 'add_to_wishlist' 29 %}" method="post" class="wishlist-form">
+                                {% csrf_token %}
+                                <button type="submit" class="wishlist-btn"><i class="fa fa-heart"></i></button>
+                            </form>
+                        </div>
                         </a>
                     </div>
                 </div>
@@ -274,7 +344,13 @@
                         <a href="{% url 'fashion' %}">
                         <h5 class="card-title">Printed Leheria Chiffon Saree (Multicolor)</h5>
                         <h6 class="card-title">₹ 550</h6>
-                        <a href="{% url 'add_to_cart' 30 %}" class="btn btn-primary">Add to Cart</a>
+                        <div class="d-flex justify-content-center">
+                            <a href="{% url 'add_to_cart' 30 %}" class="btn btn-primary">Add to Cart</a>
+                            <form action="{% url 'add_to_wishlist' 30 %}" method="post" class="wishlist-form">
+                                {% csrf_token %}
+                                <button type="submit" class="wishlist-btn"><i class="fa fa-heart"></i></button>
+                            </form>
+                        </div>
                         </a>
                     </div>
                 </div>
@@ -296,7 +372,13 @@
                         <h5 class="card-title">Realme 13 Pro 5G (Monet Purple, 128 GB)</h5>
                         <h6 class="card-title">₹ 26,990</h6>
                         </a>
-                        <a href="{% url 'add_to_cart' 31 %}" class="btn btn-primary">Add to Cart</a>
+                        <div class="d-flex justify-content-center">
+                            <a href="{% url 'add_to_cart' 31 %}" class="btn btn-primary">Add to Cart</a>
+                            <form action="{% url 'add_to_wishlist' 31 %}" method="post" class="wishlist-form">
+                                {% csrf_token %}
+                                <button type="submit" class="wishlist-btn"><i class="fa fa-heart"></i></button>
+                            </form>
+                        </div>
                     </div>
                 </div>
                 <div class="card">
@@ -306,7 +388,13 @@
                         <h5 class="card-title">SAMSUNG Galaxy F15 5G (Jazzy Green, 128 GB) (4 GB RAM)</h5>
                         <h6 class="card-title">₹ 12,990</h6>
                         </a>
-                        <a href="{% url 'add_to_cart' 32 %}" class="btn btn-primary">Add to Cart</a>
+                        <div class="d-flex justify-content-center">
+                            <a href="{% url 'add_to_cart' 32 %}" class="btn btn-primary">Add to Cart</a>
+                            <form action="{% url 'add_to_wishlist' 32 %}" method="post" class="wishlist-form">
+                                {% csrf_token %}
+                                <button type="submit" class="wishlist-btn"><i class="fa fa-heart"></i></button>
+                            </form>
+                        </div>
                     </div>
                 </div>
                 <div class="card">
@@ -316,7 +404,13 @@
                         <h5 class="card-title">HP Omen Intel Core i7 13th Gen 13620H</h5>
                         <h6 class="card-title">₹ 1,14,990</h6>
                         </a>
-                        <a href="{% url 'add_to_cart' 33 %}" class="btn btn-primary">Add to Cart</a>
+                        <div class="d-flex justify-content-center">
+                            <a href="{% url 'add_to_cart' 33 %}" class="btn btn-primary">Add to Cart</a>
+                            <form action="{% url 'add_to_wishlist' 33 %}" method="post" class="wishlist-form">
+                                {% csrf_token %}
+                                <button type="submit" class="wishlist-btn"><i class="fa fa-heart"></i></button>
+                            </form>
+                        </div>
                     </div>
                 </div>
                 <div class="card">
@@ -326,7 +420,13 @@
                         <h5 class="card-title">ASUS Vivobook 15 Intel Core i5 12th Gen 12500H</h5>
                         <h6 class="card-title">₹ 52,999</h6>
                         </a>
-                        <a href="{% url 'add_to_cart' 34 %}" class="btn btn-primary">Add to Cart</a>
+                        <div class="d-flex justify-content-center">
+                            <a href="{% url 'add_to_cart' 34 %}" class="btn btn-primary">Add to Cart</a>
+                            <form action="{% url 'add_to_wishlist' 34 %}" method="post" class="wishlist-form">
+                                {% csrf_token %}
+                                <button type="submit" class="wishlist-btn"><i class="fa fa-heart"></i></button>
+                            </form>
+                        </div>
                     </div>
                 </div>
                 <div class="card">
@@ -336,7 +436,13 @@
                         <h5 class="card-title">ASUS ROG Strix G16 Intel Core i7 13th Gen 13650HX</h5>
                         <h6 class="card-title">₹ 1,25,990</h6>
                         </a>
-                        <a href="{% url 'add_to_cart' 35 %}" class="btn btn-primary">Add to Cart</a>
+                        <div class="d-flex justify-content-center">
+                            <a href="{% url 'add_to_cart' 35 %}" class="btn btn-primary">Add to Cart</a>
+                            <form action="{% url 'add_to_wishlist' 35 %}" method="post" class="wishlist-form">
+                                {% csrf_token %}
+                                <button type="submit" class="wishlist-btn"><i class="fa fa-heart"></i></button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -352,7 +458,13 @@
                         <h5 class="card-title">Flipkart Perfect Homes Opus Engineered Wood King Box Bed</h5>
                         <h6 class="card-title">₹ 13,499</h6>
                         </a>
-                        <a href="{% url 'add_to_cart' 36 %}" class="btn btn-primary">Add to Cart</a>
+                        <div class="d-flex justify-content-center">
+                            <a href="{% url 'add_to_cart' 36 %}" class="btn btn-primary">Add to Cart</a>
+                            <form action="{% url 'add_to_wishlist' 36 %}" method="post" class="wishlist-form">
+                                {% csrf_token %}
+                                <button type="submit" class="wishlist-btn"><i class="fa fa-heart"></i></button>
+                            </form>
+                        </div>
                     </div>
                 </div>
                 <div class="card">
@@ -362,7 +474,13 @@
                         <h5 class="card-title">Home by nilkamal Marbito Engineered Wood King Box Bed</h5>
                         <h6 class="card-title">₹ 22,499</h6>
                         </a>
-                        <a href="{% url 'add_to_cart' 37 %}" class="btn btn-primary">Add to Cart</a>
+                        <div class="d-flex justify-content-center">
+                            <a href="{% url 'add_to_cart' 37 %}" class="btn btn-primary">Add to Cart</a>
+                            <form action="{% url 'add_to_wishlist' 37 %}" method="post" class="wishlist-form">
+                                {% csrf_token %}
+                                <button type="submit" class="wishlist-btn"><i class="fa fa-heart"></i></button>
+                            </form>
+                        </div>
                     </div>
                 </div>
                 <div class="card">
@@ -372,7 +490,13 @@
                         <h5 class="card-title">lestest Formal shoes/Comfortable shoes, official shoes for men</h5>
                         <h6 class="card-title">₹ 549</h6>
                         </a>
-                        <a href="{% url 'add_to_cart' 38 %}" class="btn btn-primary">Add to Cart</a>
+                        <div class="d-flex justify-content-center">
+                            <a href="{% url 'add_to_cart' 38 %}" class="btn btn-primary">Add to Cart</a>
+                            <form action="{% url 'add_to_wishlist' 38 %}" method="post" class="wishlist-form">
+                                {% csrf_token %}
+                                <button type="submit" class="wishlist-btn"><i class="fa fa-heart"></i></button>
+                            </form>
+                        </div>
                     </div>
                 </div>
                 <div class="card">
@@ -382,7 +506,13 @@
                         <h5 class="card-title">Stylish Partywear Look Formal Shoes Lace Up For Men</h5>
                         <h6 class="card-title">₹ 599</h6>
                         <a href="{% url 'fashion' %}"></a>
-                        <a href="{% url 'add_to_cart' 39 %}" class="btn btn-primary">Add to Cart</a>
+                        <div class="d-flex justify-content-center">
+                            <a href="{% url 'add_to_cart' 39 %}" class="btn btn-primary">Add to Cart</a>
+                            <form action="{% url 'add_to_wishlist' 39 %}" method="post" class="wishlist-form">
+                                {% csrf_token %}
+                                <button type="submit" class="wishlist-btn"><i class="fa fa-heart"></i></button>
+                            </form>
+                        </div>
                     </div>
                 </div>
                 <div class="card">
@@ -392,7 +522,13 @@
                         <h5 class="card-title">Women Casual Sandal Black</h5>
                         <h6 class="card-title">₹ 389</h6>
                         </a>
-                        <a href="{% url 'add_to_cart' 40 %}" class="btn btn-primary">Add to Cart</a>
+                        <div class="d-flex justify-content-center">
+                            <a href="{% url 'add_to_cart' 40 %}" class="btn btn-primary">Add to Cart</a>
+                            <form action="{% url 'add_to_wishlist' 40 %}" method="post" class="wishlist-form">
+                                {% csrf_token %}
+                                <button type="submit" class="wishlist-btn"><i class="fa fa-heart"></i></button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

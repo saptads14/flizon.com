@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Language | FLIZON</title>
+    {% load static %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'home.css' %}">
+    <style>
+        body {
+            font-family: 'Berlin Sans FB', sans-serif;
+            background-color: #f9f9f9;
+        }
+        .container {
+            text-align: center;
+            margin-top: 50px;
+        }
+        .title {
+            font-size: 2em;
+            margin-bottom: 30px;
+            color: #333;
+        }
+        .languages-list {
+            display: flex;
+            flex-direction: column; /* Stack languages vertically */
+            align-items: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .language-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px;
+            font-size: 1.1em;
+            cursor: pointer;
+            border-radius: 5px;
+            width: 200px;
+            justify-content: flex-start;
+            transition: background 0.2s;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .language-item:hover {
+            background-color: #e9ecef;
+        }
+        .language-flag {
+            width: 30px;
+            height: 30px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+        .back-btn {
+            margin-top: 40px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 7px 20px;
+            font-size: 0.95em;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+        .back-btn:hover {
+            background-color: #0056b3;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <header class="row">
+        {% include "store/navbar.html" %}   
+    </header>
+
+    <div class="container">
+        <h1 class="title">Select Your Language</h1>
+
+        <div class="languages-list">
+            <div class="language-item">
+                <img src="https://upload.wikimedia.org/wikipedia/en/a/ae/Flag_of_the_United_Kingdom.svg" alt="English" class="language-flag">
+                English
+            </div>
+            <div class="language-item">
+                <img src="https://upload.wikimedia.org/wikipedia/en/4/41/Flag_of_India.svg" alt="Hindi" class="language-flag">
+                Hindi
+            </div>
+            <div class="language-item">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/f/f9/Flag_of_Bangladesh.svg" alt="Bengali" class="language-flag">
+                Bengali
+            </div>
+            <div class="language-item">
+                <img src="https://upload.wikimedia.org/wikipedia/en/9/9a/Flag_of_Spain.svg" alt="Spanish" class="language-flag">
+                Spanish
+            </div>
+            <div class="language-item">
+                <img src="https://upload.wikimedia.org/wikipedia/en/c/c3/Flag_of_France.svg" alt="French" class="language-flag">
+                French
+            </div>
+            <div class="language-item">
+                <img src="https://upload.wikimedia.org/wikipedia/en/b/ba/Flag_of_Germany.svg" alt="German" class="language-flag">
+                German
+            </div>
+            <div class="language-item">
+                <img src="https://upload.wikimedia.org/wikipedia/en/9/9e/Flag_of_Japan.svg" alt="Japanese" class="language-flag">
+                Japanese
+            </div>
+            <div class="language-item">
+                <img src="https://upload.wikimedia.org/wikipedia/en/f/f3/Flag_of_Russia.svg" alt="Russian" class="language-flag">
+                Russian
+            </div>
+            <a href="{% url 'home' %}" class="back-btn">Back to Home</a>
+        </div>
+    </div>
+
+    {% include "store/footer.html" %}
+</body>
+</html>

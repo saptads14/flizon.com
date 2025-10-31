@@ -24,7 +24,7 @@ from store.views import CustomerRegistrationView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('store.urls')),
-     path('login/', auth_views.LoginView.as_view(), name='login'),  # Use the built-in LoginView
+    path('login/', auth_views.LoginView.as_view(), name='login'),  # Use the built-in LoginView
     path('register/', CustomerRegistrationView.as_view(), name='register'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)  # Media files should be included for development
 

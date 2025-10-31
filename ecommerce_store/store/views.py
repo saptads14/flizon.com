@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
@@ -11,44 +11,140 @@ from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
 from django.contrib.auth.models import User
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.tokens import default_token_generator
-
 from django.contrib.auth import logout
-from django.shortcuts import redirect
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Cart, CartItem, Product
-from store.models import Product 
 from decimal import Decimal
+from django.views.decorators.http import require_POST
+
+# views.py
+from django.shortcuts import render
+
+def language(request):
+    # List of languages with name and flag image path
+    languages = [
+        {'name': 'English', 'flag': 'images/flags/english.png'},
+        {'name': 'Hindi', 'flag': 'images/flags/hindi.png'},
+        {'name': 'Spanish', 'flag': 'images/flags/spanish.png'},
+        {'name': 'French', 'flag': 'images/flags/french.png'},
+        {'name': 'German', 'flag': 'images/flags/german.png'},
+        {'name': 'Chinese', 'flag': 'images/flags/chinese.png'},
+        {'name': 'Japanese', 'flag': 'images/flags/japanese.png'},
+    ]
+    
+    context = {
+        'languages': languages
+    }
+    
+    return render(request, 'store/language.html', context)
+
 
 @login_required
 def order_placed(request):
     return render(request, 'store/order_placed.html')
 
 
+########################-- Wishlist Page --#########################
+# wishlist page
+@login_required
+def wishlist(request):
+    # Retrieve wishlist data from session
+    wishlist = request.session.get('wishlist', [])
+    wishlist_items = []
+
+    for item in wishlist:
+        product = get_object_or_404(Product, id=item['product_id'])
+        wishlist_items.append({
+            'product': product,
+        })
+
+    context = {
+        'wishlist_items': wishlist_items,
+        'wishlist_count': len(wishlist),  # ✅ number of items in wishlist
+    }
+
+    return render(request, 'store/wishlist.html', context)
+
+
+@login_required
+def add_to_wishlist(request, product_id):
+    try:
+        product = get_object_or_404(Product, id=product_id)
+    except Product.DoesNotExist:
+        messages.error(request, 'Product not found.')
+        return redirect('index')
+
+    wishlist = request.session.get('wishlist', [])
+
+    # Debugging: Print current wishlist items
+    print("Current wishlist items:", wishlist)
+
+    # Check if product already exists in wishlist
+    product_in_wishlist = any(item['product_id'] == product_id for item in wishlist)
+
+    if not product_in_wishlist:
+        wishlist.append({'product_id': product_id})
+        messages.success(request, f'{product.name} added to your wishlist!')
+    else:
+        messages.info(request, f'{product.name} is already in your wishlist.')
+
+    # Save wishlist to session
+    request.session['wishlist'] = wishlist
+    request.session.modified = True  # Ensure session is saved
+
+    # Debugging: Print updated wishlist items
+    print("Updated wishlist items:", request.session.get('wishlist', []))
+
+    return redirect('wishlist')
+
+
+@login_required
+def remove_from_wishlist(request, product_id):
+    wishlist = request.session.get('wishlist', [])
+
+    # Remove the product from the wishlist if found
+    wishlist = [item for item in wishlist if item['product_id'] != product_id]
+
+    request.session['wishlist'] = wishlist
+    request.session.modified = True
+    messages.success(request, 'Item removed from wishlist.')
+
+    return redirect('wishlist')
+
+
+
+
+# cart page
 @login_required
 def cart(request):
+    # Retrieve cart data from session
     cart = request.session.get('cart', [])
     cart_items = []
     total = 0
+    total_quantity = 0
 
     for item in cart:
         product = get_object_or_404(Product, id=item['product_id'])
-        total_price = product.price * item['quantity']
+        quantity = item.get('quantity', 1)
+        total_price = product.price * quantity
         total += total_price
+        total_quantity += quantity
         cart_items.append({
             'product': product,
-            'quantity': item['quantity'],
-            'total_price': total_price
+            'quantity': quantity,
+            'total_price': total_price,
         })
 
     context = {
         'cart_items': cart_items,
-        'total': total
+        'total': total,
+        'cart_count': total_quantity,  # ✅ number of items in cart
     }
-    return render(request, 'store/cart.html', context)
 
+    return render(request, 'store/cart.html', context)
 
 
 @login_required
@@ -88,9 +184,6 @@ def add_to_cart(request, product_id):
     return redirect('cart')
 
 
-
-
-
 @login_required
 def remove_from_cart(request, product_id):
     cart = request.session.get('cart', [])
@@ -103,9 +196,7 @@ def remove_from_cart(request, product_id):
     return redirect('cart')
 
 
-
-
-
+# home page or index page
 def home(request):
     return render(request, 'store/index.html')
 
@@ -148,28 +239,30 @@ def women_shoes(request):
 def sarees(request):
     return render(request, 'store/sarees.html')
 
+# views.py
+from django.shortcuts import render, redirect
+from .models import Address  # make sure you have this model
+from django.contrib.auth.decorators import login_required
+
 @login_required
 def checkout(request):
-    cart = request.session.get('cart', [])
-    total = Decimal('0.00')
+    addresses = Address.objects.filter(user=request.user)  # get all addresses for logged-in user
 
-    for item in cart:
-        product = get_object_or_404(Product, id=item['product_id'])
-        total_price = product.price * item['quantity']
-        total += total_price
-
-    cgst = total * Decimal('0.05')
-    sgst = total * Decimal('0.05')
+    # You might already calculate totals
+    total = 1000  # example
+    cgst = total * 0.05
+    sgst = total * 0.05
     grand_total = total + cgst + sgst
 
     context = {
+        'addresses': addresses,
         'total': total,
         'cgst': cgst,
         'sgst': sgst,
         'grand_total': grand_total
     }
-
     return render(request, 'store/checkout.html', context)
+
 
 
 def logout_view(request):
@@ -179,9 +272,6 @@ def logout_view(request):
     else:
         return redirect('home') 
     
-    # Base view
-def base_view(request):
-    return render(request, 'store/base.html')
 
 # Customer Registration View
 class CustomerRegistrationView(View):
@@ -273,4 +363,274 @@ def send_email_view(request):
         return HttpResponse('Invalid header found.')
     return HttpResponse('Email sent successfully.')
 
+# store/views.py
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.db import transaction
+from django.utils import timezone
+from django.http import HttpResponseBadRequest
+
+from .models import Product, Order, OrderItem, Address
+import uuid
+from decimal import Decimal
+
+@login_required
+@transaction.atomic
+def order_placed(request):
+    """
+    Handles POST from checkout page, creates Order + OrderItem(s).
+    Robust to different session-cart shapes:
+      - dict keyed by product_id: { '1': {'qty':2,'price':100}, ... }
+      - list of items: [ {'product_id':1,'qty':2,'price':100}, ... ]
+      - (optional) Cart/CartItem models (commented)
+    """
+    if request.method != "POST":
+        return HttpResponseBadRequest("Only POST allowed")
+
+    user = request.user
+    addr_id = request.POST.get('selected_address') or request.POST.get('hidden_selected_address')
+    payment_method = request.POST.get('payment_method') or request.POST.get('hidden_payment_method')
+
+    # Basic validation
+    if not addr_id:
+        messages.error(request, "Please select a delivery address.")
+        return redirect('checkout')
+    if not payment_method:
+        messages.error(request, "Please select a payment method.")
+        return redirect('checkout')
+
+    # Fetch and validate address
+    try:
+        shipping_address = Address.objects.get(id=addr_id, user=user)
+    except Address.DoesNotExist:
+        messages.error(request, "Selected address not found.")
+        return redirect('checkout')
+
+    # Load cart from session (or from DB if you use Cart model)
+    session_cart = request.session.get('cart')  # could be dict or list
+    cart_items = []  # will hold tuples (product_obj, qty, price)
+
+    if session_cart:
+        # If it's a dict-like mapping (common)
+        if isinstance(session_cart, dict):
+            for pid, pdata in session_cart.items():
+                try:
+                    prod = Product.objects.select_for_update().get(pk=pid)
+                except Product.DoesNotExist:
+                    # skip missing products
+                    continue
+                # pdata might be dict with 'qty' and optionally 'price'
+                qty = int(pdata.get('qty', 1)) if isinstance(pdata, dict) else int(pdata)
+                price = pdata.get('price') if isinstance(pdata, dict) else prod.price
+                cart_items.append((prod, qty, Decimal(str(price))))
+        # If it's a list of item dicts (some code stores this shape)
+        elif isinstance(session_cart, list):
+            for entry in session_cart:
+                # support two possible keys: 'product_id' or 'id'
+                pid = entry.get('product_id') or entry.get('id') or entry.get('pk')
+                if pid is None:
+                    # maybe it's a list of product ids: entry == pid
+                    if isinstance(entry, (int, str)):
+                        pid = entry
+                        qty = 1
+                        price = None
+                    else:
+                        continue
+                try:
+                    prod = Product.objects.select_for_update().get(pk=pid)
+                except Product.DoesNotExist:
+                    continue
+                qty = int(entry.get('qty', 1))
+                price = entry.get('price') if entry.get('price') is not None else prod.price
+                cart_items.append((prod, qty, Decimal(str(price))))
+        else:
+            # Unknown shape: try to handle numeric-indexable
+            try:
+                # attempt to iterate like dict
+                for pid, pdata in session_cart.items():
+                    try:
+                        prod = Product.objects.select_for_update().get(pk=pid)
+                    except Product.DoesNotExist:
+                        continue
+                    qty = int(pdata.get('qty', 1))
+                    price = pdata.get('price') or prod.price
+                    cart_items.append((prod, qty, Decimal(str(price))))
+            except Exception:
+                # log for debugging
+                print("order_placed: unexpected session_cart type:", type(session_cart), session_cart)
+                messages.error(request, "Cart format not recognized. Please try again.")
+                return redirect('checkout')
+    else:
+        # Optionally handle Cart model (if you use it) - uncomment and adapt
+        """
+        try:
+            cart = Cart.objects.get(user=user)
+            items_qs = CartItem.objects.filter(cart=cart).select_related('product').select_for_update()
+            for ci in items_qs:
+                cart_items.append((ci.product, ci.quantity, ci.product.price))
+        except Cart.DoesNotExist:
+            cart_items = []
+        """
+        messages.error(request, "Your cart is empty.")
+        return redirect('home')
+
+    # If cart_items empty after processing
+    if not cart_items:
+        messages.error(request, "Your cart is empty or items are invalid.")
+        return redirect('home')
+
+    # Calculate totals server-side
+    subtotal = Decimal('0.00')
+    for prod, qty, price in cart_items:
+        price = Decimal(price)
+        subtotal += price * qty
+
+    cgst = (subtotal * Decimal('0.05')).quantize(Decimal('0.01'))
+    sgst = (subtotal * Decimal('0.05')).quantize(Decimal('0.01'))
+    grand_total = (subtotal + cgst + sgst).quantize(Decimal('0.01'))
+
+    # Create order
+    order_number = uuid.uuid4().hex[:12].upper()
+    order = Order.objects.create(
+        user=user,
+        order_number=order_number,
+        shipping_address=shipping_address,
+        payment_method=payment_method,
+        subtotal=subtotal,
+        cgst=cgst,
+        sgst=sgst,
+        total=grand_total,
+        status='placed',
+        created_at=timezone.now(),
+    )
+
+    # Create order items and decrement stock
+    for prod, qty, price in cart_items:
+        # ensure enough stock
+        if hasattr(prod, 'stock') and prod.stock is not None:
+            if prod.stock < qty:
+                transaction.set_rollback(True)
+                messages.error(request, f"Insufficient stock for {prod.name}. Available: {prod.stock}")
+                return redirect('checkout')
+
+        OrderItem.objects.create(
+            order=order,
+            product=prod,
+            product_name=prod.name,
+            quantity=qty,
+            price=price,
+            total_price=(price * qty).quantize(Decimal('0.01'))
+        )
+
+        if hasattr(prod, 'stock') and prod.stock is not None:
+            prod.stock = prod.stock - qty
+            if prod.stock < 0:
+                prod.stock = 0
+            prod.save()
+
+    # Clear session cart (if used)
+    if 'cart' in request.session:
+        try:
+            del request.session['cart']
+            request.session.modified = True
+        except KeyError:
+            pass
+
+    messages.success(request, f"Order placed successfully! Order no: {order_number}")
+    # Redirect to a confirmation page — ensure you have this URL/name
+    return redirect('order_placed')  # change to your confirmation view name or 'order_placed' if you have it
+
+
+
+# store/views.py
+from django.shortcuts import render, redirect
+from django.core.mail import send_mail
+from django.contrib import messages
+
+def contact(request):
+    if request.method == "POST":
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        message = request.POST.get('message')
+
+        # Optional: send an email (configure EMAIL settings in settings.py)
+        # send_mail(f'Contact from {name}', message, settings.DEFAULT_FROM_EMAIL, ['you@yourdomain.com'])
+
+        messages.success(request, "Thanks — your message has been received.")
+        return redirect('contact')  # stays on the same page or redirect elsewhere
+
+    return render(request, 'store/contact.html')
+
+
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from .models import Address
+
+
+
+
+@login_required
+def add_address(request):
+    if request.method == 'POST':
+        full_name = request.POST.get('full_name')
+        phone = request.POST.get('phone')
+        line1 = request.POST.get('line1')
+        line2 = request.POST.get('line2')
+        city = request.POST.get('city')
+        state = request.POST.get('state')
+        pincode = request.POST.get('pincode')
+        is_default = request.POST.get('is_default') == 'on'
+
+        if is_default:
+            # unset previous default addresses
+            Address.objects.filter(user=request.user, is_default=True).update(is_default=False)
+
+        Address.objects.create(
+            user=request.user,
+            full_name=full_name,
+            phone=phone,
+            line1=line1,
+            line2=line2,
+            city=city,
+            state=state,
+            pincode=pincode,
+            is_default=is_default
+        )
+
+    return redirect('checkout')
+
+
+
+@login_required
+def edit_address(request):
+    if request.method == 'POST':
+        addr_id = request.POST.get('addr_id')
+        address = get_object_or_404(Address, id=addr_id, user=request.user)
+
+        address.full_name = request.POST.get('full_name')
+        address.line1 = request.POST.get('line1')
+        address.line2 = request.POST.get('line2')
+        address.city = request.POST.get('city')
+        address.state = request.POST.get('state')
+        address.pincode = request.POST.get('pincode')
+        address.phone = request.POST.get('phone')
+        is_default = request.POST.get('is_default') == 'on'
+        if is_default:
+            Address.objects.filter(user=request.user, is_default=True).update(is_default=False)
+        address.is_default = is_default
+        address.save()
+        messages.success(request, "Address updated successfully!")
+    return redirect('checkout')
+
+
+@login_required
+def delete_address(request):
+    if request.method == 'POST':
+        addr_id = request.POST.get('addr_id')
+        address = get_object_or_404(Address, id=addr_id, user=request.user)
+        address.delete()
+        messages.success(request, "Address removed successfully!")
+    return redirect('checkout')
 
