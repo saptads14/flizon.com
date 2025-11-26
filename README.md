@@ -27,36 +27,16 @@ FLIZON is a clean, responsive, and modern e-commerce web application designed to
 
 ## 🛠️ Tech Stack
 
-### Programming Languages
 <p align="left">
   <img src="https://skillicons.dev/icons?i=python" height="50" />
-  <img src="https://skillicons.dev/icons?i=js" height="50" />
-</p>
-
-### Frontend Development
-<p align="left">
+  <img src="https://skillicons.dev/icons?i=django" height="50" />
   <img src="https://skillicons.dev/icons?i=html" height="50" />
   <img src="https://skillicons.dev/icons?i=css" height="50" />
   <img src="https://skillicons.dev/icons?i=javascript" height="50" />
-</p>
-
-### Backend Development
-<p align="left">
-  <img src="https://skillicons.dev/icons?i=django" height="50" />
-  <img src="https://skillicons.dev/icons?i=python" height="50" />
-</p>
-
-### Tools & Editors
-<p align="left">
   <img src="https://skillicons.dev/icons?i=vscode" height="50" />
   <img src="https://skillicons.dev/icons?i=git" height="50" />
   <img src="https://skillicons.dev/icons?i=github" height="50" />
-</p>
-
-### Databases
-<p align="left">
   <img src="https://skillicons.dev/icons?i=sqlite" height="50" />
-  <img src="https://skillicons.dev/icons?i=mysql" height="50" />
 </p>
 
 ---
