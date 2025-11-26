@@ -52,3 +52,20 @@ ecommerce_store/
 
 ## 💻 Setup & Installation Guide
   - Follow the steps below to set up the project locally.
+
+1️⃣ Clone the Repository
+```bash
+git clone https://github.com/saptads14/flizon.com.git
+cd flizon.com
+```
+2️⃣ Create & Activate Virtual Environment
+```bash
+# Create virtual environment (windows)
+python -m venv .venv
+.venv\Scripts\activate
+
+# Create virtual environment (Linux/macOS)
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
