@@ -45,7 +45,7 @@ FLIZON is a clean, responsive, and modern e-commerce web application designed to
 
 Here is the preview of the FLIZON dashboard:
 
-![FLIZON Dashboard](./images/dashboard.png)
+![FLIZON Dashboard](ecommerce_store/images/dashboard.jpeg)
 
 ---
 
