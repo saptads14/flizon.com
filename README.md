@@ -130,7 +130,7 @@ Commercial use, redistribution, or selling of this project is not permitted.
 
 - **GitHub:** https://github.com/saptads14  
 - **LinkedIn:** https://www.linkedin.com/in/saptadeep-halder  
-- **Email:** saptadeephalder@gmail.com 
+- **Email:** saptadeephalder2004@gmail.com 
 
 ---
 
