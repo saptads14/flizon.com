@@ -115,8 +115,39 @@ http://127.0.0.1:8000
 # Admin Panel:
 http://127.0.0.1:8000/admin
 ```
+---
 
 ## 📄 License
 This project is licensed for Educational and Learning Purposes Only.
 You may use, modify, and study the code freely for personal or academic projects.
 Commercial use, redistribution, or selling of this project is not permitted.
+
+---
+
+---
+
+## 👋 Connect With Me
+
+<p align="left">
+  <a href="https://github.com/saptads14">
+    <img src="https://skillicons.dev/icons?i=github" height="40" />
+  </a>
+  <a href="https://www.linkedin.com/">
+    <img src="https://skillicons.dev/icons?i=linkedin" height="40" />
+  </a>
+  <a href="mailto:your-email@example.com">
+    <img src="https://skillicons.dev/icons?i=gmail" height="40" />
+  </a>
+</p>
+
+---
+
+## 💬 Suggestions or Feedback?
+
+⭐ Feel free to open an **Issue** or create a **Pull Request**.  
+💡 Your suggestions are always welcome — it helps make FLIZON better!
+
+---
+
+## 🙏 Thank You for Visiting!
+**Saptadeep (saptads14)**  
