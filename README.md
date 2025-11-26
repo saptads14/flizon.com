@@ -128,17 +128,9 @@ Commercial use, redistribution, or selling of this project is not permitted.
 
 ## 👋 Connect With Me
 
-<p align="left">
-  <a href="https://github.com/saptads14">
-    <img src="https://skillicons.dev/icons?i=github" height="20" />
-  </a>
-  <a href="https://www.linkedin.com/">
-    <img src="https://skillicons.dev/icons?i=linkedin" height="20" />
-  </a>
-  <a href="mailto:saptadeephalder2004@gmail.com">
-    <img src="https://skillicons.dev/icons?i=gmail" height="20" />
-  </a>
-</p>
+- **GitHub:** https://github.com/saptads14  
+- **LinkedIn:** https://www.linkedin.com/in/saptadeep-halder  
+- **Email:** saptadeephalder@gmail.com 
 
 ---
 
