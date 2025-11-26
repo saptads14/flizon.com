@@ -129,7 +129,7 @@ Commercial use, redistribution, or selling of this project is not permitted.
 ## 👋 Connect With Me
 
 - **GitHub:** https://github.com/saptads14  
-- **LinkedIn:** https://www.linkedin.com/in/saptadeep-halder  
+- **LinkedIn:** https://www.linkedin.com/in/saptadeep-halder04/
 - **Email:** saptadeephalder2004@gmail.com 
 
 ---
