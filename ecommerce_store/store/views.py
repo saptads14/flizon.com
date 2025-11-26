@@ -11,20 +11,22 @@ from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
 from django.contrib.auth.models import User
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseBadRequest
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth import logout
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import Cart, CartItem, Product
+from .models import Cart, CartItem, Product, Order, OrderItem, Address
 from decimal import Decimal
 from django.views.decorators.http import require_POST
+from .models import Address
+from django.db import transaction
+from django.utils import timezone
+import uuid
+from decimal import Decimal
 
-# views.py
-from django.shortcuts import render
 
 def language(request):
-    # List of languages with name and flag image path
     languages = [
         {'name': 'English', 'flag': 'images/flags/english.png'},
         {'name': 'Hindi', 'flag': 'images/flags/hindi.png'},
@@ -34,7 +36,6 @@ def language(request):
         {'name': 'Chinese', 'flag': 'images/flags/chinese.png'},
         {'name': 'Japanese', 'flag': 'images/flags/japanese.png'},
     ]
-    
     context = {
         'languages': languages
     }
@@ -115,7 +116,7 @@ def remove_from_wishlist(request, product_id):
     return redirect('wishlist')
 
 
-
+########################-- Cart Page --#########################
 # cart page
 @login_required
 def cart(request):
@@ -148,6 +149,16 @@ def cart(request):
 
 @login_required
 def add_to_cart(request, product_id):
+    """
+    Adds a product to the cart.
+
+    Args:
+        request: The current request object.
+        product_id: The ID of the product to add to the cart.
+
+    Returns:
+        A redirect to the cart page.
+    """
     try:
         product = get_object_or_404(Product, id=product_id)
     except Product.DoesNotExist:
@@ -155,6 +166,7 @@ def add_to_cart(request, product_id):
         return redirect('index')
 
     cart = request.session.get('cart', [])
+
     
     # Debugging: Print current cart items
     print("Current cart items:", cart)
@@ -181,6 +193,7 @@ def add_to_cart(request, product_id):
     print("Updated cart items:", request.session.get('cart', []))
 
     return redirect('cart')
+
 
 
 @login_required
@@ -239,16 +252,12 @@ def sarees(request):
     return render(request, 'store/sarees.html')
 
 
-from django.shortcuts import render, redirect
-from .models import Address  # make sure you have this model
-from django.contrib.auth.decorators import login_required
-
 @login_required
 def checkout(request):
-    addresses = Address.objects.filter(user=request.user)  # get all addresses for logged-in user
+    addresses = Address.objects.filter(user=request.user)
 
     # You might already calculate totals
-    total = 1000  # example
+    total = 1000
     cgst = total * 0.05
     sgst = total * 0.05
     grand_total = total + cgst + sgst
@@ -263,11 +272,10 @@ def checkout(request):
     return render(request, 'store/checkout.html', context)
 
 
-
 def logout_view(request):
     if request.method == 'POST':
         logout(request)
-        return redirect('login')  # Redirect to the login page or any other page
+        return redirect('login')  
     else:
         return redirect('home') 
     
@@ -319,6 +327,7 @@ def password_reset_request(request):
     password_reset_form = PasswordResetForm()
     return render(request, 'store/password_reset_form.html', {'form': password_reset_form, 'title': 'Password Reset'})
 
+
 def password_reset_confirm(request, uidb64=None, token=None):
     if request.method == 'POST':
         form = SetPasswordForm(user, request.POST)
@@ -340,8 +349,10 @@ def password_reset_confirm(request, uidb64=None, token=None):
             return redirect('password_reset')
     return render(request, 'store/password_reset_confirm.html', {'form': form, 'title': 'Set New Password'})
 
+
 def password_reset_done(request):
     return render(request, 'store/password_reset_done.html', {'title': 'Password Reset Done'})
+
 
 def password_reset_complete(request):
     return render(request, 'store/password_reset_complete.html', {'title': 'Password Reset Complete'})
@@ -350,6 +361,7 @@ def password_reset_complete(request):
 def custom_logout_view(request):
     logout(request)
     return redirect(request, 'user/logout.html')
+
 
 def send_email_view(request):
     subject = "Subject"
@@ -362,17 +374,7 @@ def send_email_view(request):
         return HttpResponse('Invalid header found.')
     return HttpResponse('Email sent successfully.')
 
-# store/views.py
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib import messages
-from django.contrib.auth.decorators import login_required
-from django.db import transaction
-from django.utils import timezone
-from django.http import HttpResponseBadRequest
 
-from .models import Product, Order, OrderItem, Address
-import uuid
-from decimal import Decimal
 
 @login_required
 @transaction.atomic
@@ -444,9 +446,7 @@ def order_placed(request):
                 price = entry.get('price') if entry.get('price') is not None else prod.price
                 cart_items.append((prod, qty, Decimal(str(price))))
         else:
-            # Unknown shape: try to handle numeric-indexable
             try:
-                # attempt to iterate like dict
                 for pid, pdata in session_cart.items():
                     try:
                         prod = Product.objects.select_for_update().get(pk=pid)
@@ -537,37 +537,19 @@ def order_placed(request):
             pass
 
     messages.success(request, f"Order placed successfully! Order no: {order_number}")
-    # Redirect to a confirmation page — ensure you have this URL/name
-    return redirect('order_placed')  # change to your confirmation view name or 'order_placed' if you have it
+    return redirect('order_placed')  
 
 
-
-# store/views.py
-from django.shortcuts import render, redirect
-from django.core.mail import send_mail
-from django.contrib import messages
 
 def contact(request):
     if request.method == "POST":
         name = request.POST.get('name')
         email = request.POST.get('email')
         message = request.POST.get('message')
-
-        # Optional: send an email (configure EMAIL settings in settings.py)
-        # send_mail(f'Contact from {name}', message, settings.DEFAULT_FROM_EMAIL, ['you@yourdomain.com'])
-
         messages.success(request, "Thanks — your message has been received.")
-        return redirect('contact')  # stays on the same page or redirect elsewhere
+        return redirect('contact')
 
     return render(request, 'store/contact.html')
-
-
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
-from django.contrib import messages
-from .models import Address
-
-
 
 
 @login_required
@@ -583,7 +565,6 @@ def add_address(request):
         is_default = request.POST.get('is_default') == 'on'
 
         if is_default:
-            # unset previous default addresses
             Address.objects.filter(user=request.user, is_default=True).update(is_default=False)
 
         Address.objects.create(
@@ -597,9 +578,7 @@ def add_address(request):
             pincode=pincode,
             is_default=is_default
         )
-
     return redirect('checkout')
-
 
 
 @login_required

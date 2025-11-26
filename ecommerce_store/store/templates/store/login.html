@@ -6,11 +6,12 @@
 {% block main-content %}
 
 <style>
-    .container {
-        margin-top: 50px;
+    .login-wrapper {
+        margin-top: 70px;
+        margin-bottom: 100px !important; /* Ensures footer stays away */
     }
     .login-heading {
-        font-family:Georgia, 'Times New Roman', Times, serif;
+        font-family: Georgia, 'Times New Roman', Times, serif;
         color: #1d1b4f;
     }
     .login-image {
@@ -24,6 +25,7 @@
         border-radius: 10px;
         padding: 40px;
         box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.63);
+        margin-bottom: 80px; /* extra spacing above footer */
     }
     .form-group {
         margin-bottom: 15px;
@@ -56,11 +58,6 @@
         font-weight: bold;
         font-size: 12px;
     }
-    .create-account {
-        margin-top: 20px;
-        font-weight: bold;
-        font-size: 12px;
-    }
     .text-danger {
         color: #f01a2f !important;
         font-weight: bold;
@@ -68,11 +65,13 @@
     }
 </style>
 
-<div class="container">
+<div class="container login-wrapper">
     <div class="row">
         <div class="col-sm-6 offset-sm-3">
+
             <h3 class="login-heading text-center"><u>Login</u></h3>
             <hr>
+
             <div class="text-center">
                 <img src="{% static 'icons/icon2.gif' %}" alt="Login Animation" class="login-image">
             </div>
@@ -80,23 +79,37 @@
             <div class="form-container">
                 <form action="" method="post" novalidate>
                     {% csrf_token %}
+                    
                     {% for field in form %}
                     <div class="form-group">
-                        {{ field.label_tag }} {{ field }} <small class="text-danger">{{ field.errors|striptags }}</small>
+                        {{ field.label_tag }} {{ field }}
+                        <small class="text-danger">{{ field.errors|striptags }}</small>
                     </div>
                     {% endfor %}
+
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary btn-submit">Submit</button>
                     </div>
-                    <small><a href="{% url 'password_reset' %}" class="forgot-password">Forgot Password?</a></small>
+
+                    <small>
+                        <a href="{% url 'password_reset' %}" class="forgot-password">
+                            Forgot Password?
+                        </a>
+                    </small>
+
                     <div class="text-center text-primary fw-bold create-account">
-                        <small>New User? <a href="{% url 'customerregistration' %}" class="text-danger">Create an account</a></small>
+                        <small>
+                            New User?
+                            <a href="{% url 'customerregistration' %}" class="text-danger">
+                                Create an account
+                            </a>
+                        </small>
                     </div>
 
                     {% if form.non_field_errors %}  
-                    {% for error in form.non_field_errors %}
-                    <p class="alert alert-danger my-3">{{ error }}</p>
-                    {% endfor %}
+                        {% for error in form.non_field_errors %}
+                        <p class="alert alert-danger my-3">{{ error }}</p>
+                        {% endfor %}
                     {% endif %}
                 </form>
             </div>
