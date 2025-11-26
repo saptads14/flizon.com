@@ -130,13 +130,13 @@ Commercial use, redistribution, or selling of this project is not permitted.
 
 <p align="left">
   <a href="https://github.com/saptads14">
-    <img src="https://skillicons.dev/icons?i=github" height="40" />
+    <img src="https://skillicons.dev/icons?i=github" height="20" />
   </a>
   <a href="https://www.linkedin.com/">
-    <img src="https://skillicons.dev/icons?i=linkedin" height="40" />
+    <img src="https://skillicons.dev/icons?i=linkedin" height="20" />
   </a>
-  <a href="mailto:your-email@example.com">
-    <img src="https://skillicons.dev/icons?i=gmail" height="40" />
+  <a href="mailto:saptadeephalder2004@gmail.com">
+    <img src="https://skillicons.dev/icons?i=gmail" height="20" />
   </a>
 </p>
 
