@@ -139,7 +139,3 @@ Commercial use, redistribution, or selling of this project is not permitted.
 ⭐ Feel free to open an **Issue** or create a **Pull Request**.  
 💡 Your suggestions are always welcome — it helps make FLIZON better!
 
----
-
-## 🙏 Thank You for Visiting!
-**Saptadeep (saptads14)**  
