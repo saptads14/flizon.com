@@ -4,15 +4,26 @@ FLIZON is a clean, responsive, and modern e-commerce web application designed to
 
 ---
 
-## ⭐ Features
-- 🔐 User Authentication (Sign Up, Login, Logout, Forgot Password)
-- 🛍️ Product Listing with Category Filtering (Fashion, Electronics, Furniture, etc.)
-- ❤️ Add to Wishlist
-- 🛒 Add to Cart
-- 💳 Secure Checkout & Order Confirmation
-- 🛠️ Admin Panel for Product & Category Management
-- 📱 Fully Responsive UI with modern animations
+## 🚀 Features
+
+### ✅ User Features
+- 🔐 **User Authentication**  
+  - Sign Up, Login, Logout  
+  - Forgot/Reset Password  
+- 🛍️ **Product Browsing**  
+  - Category-based filtering (Fashion, Electronics, Furniture, etc.)  
+  - Detailed product view with clean UI  
+- ❤️ **Add to Wishlist**  
+- 🛒 **Add to Cart**  
+- 💳 **Dummy Checkout Process**   
+- 📱 **Fully Responsive UI with animations**  
+
+### ⚙️ Admin Features
+- 📌 Add / Edit / Delete Products  
+- 📂 Category Management   
+- 🛠️ Admin Dashboard  
 
 ---
 
-## 📁 Project Structure
+## 🎯 Outcome
+A complete, feature-rich e-commerce platform that replicates real-world online store functionality using a modern responsive interface and smooth navigation.
