@@ -68,4 +68,37 @@ python -m venv .venv
 python3 -m venv .venv
 source .venv/bin/activate
 ```
+3️⃣ Install Dependencies
+```bash
+pip install --upgrade pip
+pip install -r requirements.txt
+```
+4️⃣ Run Migrations
+```bash
+python manage.py makemigrations
+python manage.py migrate
+```
+5️⃣ Create Superuser
+```bash
+python manage.py createsuperuser
+```
+6️⃣ Collect Static Files (Optional/Production)
+```bash
+python manage.py collectstatic --noinput
+```
+7️⃣ Run Django Server
+```bash
+python manage.py runserver 0.0.0.0:8000
+```
+## Now visit:
+```bash
+# Frontend:
+http://127.0.0.1:8000
+# Admin Panel:
+http://127.0.0.1:8000/admin
+```
 
+## 📄 License
+This project is licensed for Educational and Learning Purposes Only.
+You may use, modify, and study the code freely for personal or academic projects.
+Commercial use, redistribution, or selling of this project is not permitted.
