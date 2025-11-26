@@ -9,7 +9,6 @@ FLIZON is a clean, responsive, and modern e-commerce web application designed to
 ### ✅ User Features
 - **User Authentication**  
   - Sign Up, Login, Logout
-    - ok
   - Forgot/Reset Password  
 - **Product Browsing**  
   - Category-based filtering (Fashion, Electronics, Furniture, etc.)  
