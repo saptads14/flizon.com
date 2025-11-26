@@ -47,3 +47,8 @@ ecommerce_store/
 ├─ db.sqlite3
 ├─ manage.py
 └─ requirements.txt
+```
+---
+
+## 💻 Setup & Installation Guide
+  - Follow the steps below to set up the project locally.
